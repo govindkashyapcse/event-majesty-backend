@@ -4,16 +4,16 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User from "../models/User.js";
 
 
-passport.use(
-  new GoogleStrategy(
+passport.use(new GoogleStrategy(
     {
       clientID: toString(process.env.GOOGLE_CLIENT_ID),
       clientSecret: toString(process.env.GOOGLE_CLIENT_SECRET),
-      callbackURL: "/auth/google/callback"
-    },
-    async (_, __, profile, done) => {
-      try {
-        let user = await User.findOne({ googleId: profile.id });
+      callbackURL: "/auth/google/callback",
+      scope: ['profile','email']
+    } ,async (accessToken, refreshToken, profile, done) => {
+      try{
+        let user = await User.findOne({providerId: profile.id, provider: 'google'})
+
 
         if (!user) {
           user = await User.create({
@@ -30,3 +30,6 @@ passport.use(
     }
   )
 );
+
+passport.serializeUser( (user, done)=> done(null, user))
+passport.deserializeUser( (user, done)=> done(null, false))

@@ -34,14 +34,12 @@ authRouter.post(
 );
 
 /* Google Login */
-authRouter.get(
-  "/google",
+authRouter.get("/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-authRouter.get(
-  "/google/callback",
-  passport.authenticate("google", { session: false }),
+authRouter.get("/google/callback",
+  passport.authenticate("google", { session: false, failureRedirect: '/' }),
   (req, res) => {
     const token = generateToken(req.user);
     res.redirect(`${process.env.CLIENT_URL}/oauth-success?token=${token}`);
