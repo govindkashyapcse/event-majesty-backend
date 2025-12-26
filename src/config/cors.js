@@ -1,11 +1,4 @@
-const allowedOrigins = [
-  "http://localhost:5000",
-  "http://localhost:5173",
-  "https://event-majesty.vercel.app",
-  "http://event-majesty.vercel.app",
-  "https://event-majesty-backend.vercel.app",
-  "http://event-majesty-backend.vercel.app"
-];
+const allowedOrigins = ["*"];
 
 const corsOptions = {
   origin: (origin, callback) => {
