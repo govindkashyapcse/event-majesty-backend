@@ -22,10 +22,10 @@ authRouter.post("/register", async (req, res) => {
 });
 
 /* Login (Email) */
-authRouter.post(
-  "/login",
+authRouter.post("/login",
   passport.authenticate("local", { session: false }),
-  (req, res) => {
+  async (req, res) => {
+    
     res.json({
       token: generateToken(req.user),
       user: req.user
@@ -34,16 +34,12 @@ authRouter.post(
 );
 
 /* Google Login */
-authRouter.get("/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-authRouter.get("/google/callback",
-  passport.authenticate("google", { session: false, failureRedirect: '/' }),
-  (req, res) => {
-    const token = generateToken(req.user);
-    res.redirect(`${process.env.CLIENT_URL}/oauth-success?token=${token}`);
-  }
-);
+authRouter.get('/google', passport.authenticate('google',{scope: ['profile','email']}))
+authRouter.get('/google/callback', passport.authenticate('google',{session: false, failureRedirect: '/'}),
+    (req,res)=>{
+        const token = generateToken(req.user)
+        res.redirect(`/auth-success?token=${token}`)
+    }
+)
 
 export default authRouter;
