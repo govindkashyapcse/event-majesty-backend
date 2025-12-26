@@ -1,5 +1,5 @@
 // models/Event.js
-import mongoose from "../config/db";
+import mongoose from "mongoose";
 
 const eventSchema = new mongoose.Schema(
   {
@@ -17,4 +17,6 @@ const eventSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.model("Event", eventSchema);
+const Event = mongoose.model("Event", eventSchema);
+
+export default Event;

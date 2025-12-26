@@ -1,14 +1,18 @@
 import express from "express";
 import passport from "./config/passport.js";
 import cors from "cors";
-import { connectDB } from "./config/db.js";
+import mongoose from "mongoose";
 import authRouter from "./routes/authRoutes.js";
 import corsOptions from "./config/cors.js";
 import dotenv from "dotenv";
 
 dotenv.config();
 // Connect to MongoDB
-connectDB(process.env.MONGO_URI);
+mongoose.connect(String(process.env.MONGO_URI))
+    .then(()=> console.log("MongoDb Connected!"))
+    .catch(err => console.log(err))
+
+
 const app = express();
 
 // CORS

@@ -1,5 +1,5 @@
 // models/Registration.js
-import mongoose from "../config/db";
+import mongoose from "mongoose";
 
 const registrationSchema = new mongoose.Schema(
   {
@@ -19,5 +19,7 @@ const registrationSchema = new mongoose.Schema(
 
 registrationSchema.index({ userId: 1, eventId: 1 }, { unique: true });
 
-export default mongoose.model("Registration", registrationSchema);
+const Registration = mongoose.model("Registration", registrationSchema);
+
+export default Registration; 
 
